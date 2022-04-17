@@ -5,19 +5,35 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.astrobin.ui.screens.top.TopScreen
+import com.example.astrobin.ui.screens.top.MainScreen
 
 @Composable
 fun AstroNavHost(
     navController: NavHostController,
-    startDestination: String = "top",
+    startDestination: String = Routes.Top,
     paddingValues: PaddingValues
 ) {
-    NavHost(navController = navController, startDestination = startDestination) {
+    NavHost(
+        navController = navController,
+        startDestination = startDestination
+    ) {
         composable(Routes.Top) {
-            TopScreen(paddingValues, navController)
+            MainScreen(paddingValues, navController)
         }
-        /*composable("home") {
+    }
+}
+
+object Routes {
+    val Top = "top"
+    val Latest = "latest"
+    val Search = "search"
+    val Profile = "profile"
+    fun User(id: Int) = "user/$id"
+    fun Image(hash: String) = "image/$hash"
+}
+
+
+/*composable("home") {
 //            UserScreen(93620, padding, nav)
             ImageScreen("v7v9fq", padding, nav)
 //            TopScreen(padding = padding, nav = nav)
@@ -66,14 +82,3 @@ fun AstroNavHost(
         composable(Routes.Search) {
             SearchScreen(nav, entry = it, padding)
         }*/
-    }
-}
-
-object Routes {
-    val Top = "top"
-    val Latest = "latest"
-    val Search = "search"
-    val Profile = "profile"
-    fun User(id: Int) = "user/$id"
-    fun Image(hash: String) = "image/$hash"
-}

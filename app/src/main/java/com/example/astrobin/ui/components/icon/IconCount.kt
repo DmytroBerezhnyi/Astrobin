@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.astrobin.ui.theme.AstrobinTheme
 
 @Composable
 fun IconCount(
@@ -24,13 +25,15 @@ fun IconCount(
         Icon(
             imageVector = icon,
             contentDescription = contentDescription,
+            tint = MaterialTheme.colors.onSurface,
             modifier = Modifier
                 .padding(top = 0.dp, end = 4.dp)
                 .size(14.dp)
         )
         Text(
             text = "$count",
-            style = MaterialTheme.typography.subtitle2
+            style = MaterialTheme.typography.subtitle2,
+            color = MaterialTheme.colors.onSurface
         )
     }
 }
@@ -38,5 +41,15 @@ fun IconCount(
 @Preview
 @Composable
 private fun PrevIconCount() {
-    IconCount(count = 23, icon = Icons.Filled.Backpack)
+    AstrobinTheme {
+        IconCount(count = 23, icon = Icons.Filled.Backpack)
+    }
+}
+
+@Preview
+@Composable
+private fun PrevIconCountNight() {
+    AstrobinTheme(darkTheme = true) {
+        IconCount(count = 23, icon = Icons.Filled.Backpack)
+    }
 }

@@ -1,12 +1,13 @@
 package com.example.astrobin.ui.components.image
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -19,12 +20,11 @@ import com.example.astrobin.api.provideMockTopPick
 import com.example.astrobin.ui.theme.AstrobinTheme
 
 @Composable
-fun TopPickRow(astroImage: AstroImage? = null, image: TopPick, nav: NavController) {
-    AstroImageWithContent(
-        modifier = Modifier.padding(horizontal = 16.dp),
-        imageUrl = image.url_regular,
-        onClick = { nav.navigate("image/${image.hash}") }
+fun AstroPostItem(astroImage: AstroImage? = null, image: TopPick, nav: NavController) {
+    Box(
+        modifier = Modifier.padding(horizontal = 16.dp)
     ) {
+        AstroImage(imageUrl = image.url_regular, onClick = { nav.navigate("image/${image.hash}") })
         if (astroImage != null) {
             Text(
                 text = astroImage.title.orEmpty(),
@@ -49,9 +49,9 @@ fun TopPickRow(astroImage: AstroImage? = null, image: TopPick, nav: NavControlle
 
 @Preview(showBackground = true)
 @Composable
-private fun TopPickRowPreview() {
-    AstrobinTheme(darkTheme = false) {
-        TopPickRow(
+private fun AstroPostItemPreview() {
+    AstrobinTheme {
+        AstroPostItem(
             astroImage = provideMockAstroImage(),
             image = provideMockTopPick(),
             nav = rememberNavController()
@@ -61,10 +61,12 @@ private fun TopPickRowPreview() {
 
 @Preview
 @Composable
-private fun TopPickRowImageNullPreview() {
-    TopPickRow(
-        astroImage = null,
-        image = provideMockTopPick(),
-        nav = rememberNavController()
-    )
+private fun AstroPostItemDarkPreview() {
+    AstrobinTheme(darkTheme = true) {
+        AstroPostItem(
+            astroImage = provideMockAstroImage(),
+            image = provideMockTopPick(),
+            nav = rememberNavController()
+        )
+    }
 }

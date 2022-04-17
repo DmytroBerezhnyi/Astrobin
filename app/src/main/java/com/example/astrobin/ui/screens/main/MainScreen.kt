@@ -18,15 +18,12 @@ import androidx.paging.compose.items
 import com.example.astrobin.api.AstroImage
 import com.example.astrobin.api.TopPickPagingSource
 import com.example.astrobin.di.LocalAstrobinApi
-import com.example.astrobin.ui.components.image.TopPickRow
+import com.example.astrobin.ui.components.image.AstroPostItem
 import com.example.astrobin.ui.components.loading.LoadingIndicator
 import com.google.accompanist.insets.statusBarsPadding
 
 @Composable
-fun TopScreen(
-    padding: PaddingValues,
-    nav: NavController
-) {
+fun MainScreen(padding: PaddingValues, nav: NavController) {
     val api = LocalAstrobinApi.current
     val pager = remember { Pager(PagingConfig(pageSize = 20)) { TopPickPagingSource(api) } }
     val topPicks = pager.flow.collectAsLazyPagingItems()
@@ -46,7 +43,7 @@ fun TopScreen(
                 value = api.image(it!!.hash)
             }.value
 
-            TopPickRow(
+            AstroPostItem(
                 astroImage = astroImage,
                 image = it!!,
                 nav = nav

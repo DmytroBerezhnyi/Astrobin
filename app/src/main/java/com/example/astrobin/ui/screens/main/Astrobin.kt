@@ -26,7 +26,7 @@ fun Astrobin(api: AstrobinApi, imageLoader: ImageLoader) {
         val navHostController = rememberNavController()
         val navBackStackEntry by navHostController.currentBackStackEntryAsState()
 
-        AstrobinTheme {
+        AstrobinTheme(darkTheme = true) {
             AstroAppWindow(
                 modifier = Modifier
                     .fillMaxSize()

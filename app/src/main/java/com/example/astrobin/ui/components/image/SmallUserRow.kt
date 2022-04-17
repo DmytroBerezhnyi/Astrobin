@@ -25,11 +25,12 @@ fun SmallUserRow(
     modifier: Modifier = Modifier,
 ) {
     Row(modifier, verticalAlignment = Alignment.CenterVertically) {
-        AstroAvatar(avatarUrl(user))
+        AstroAvatar(imageUrl = avatarUrl(user))
         Column(Modifier.padding(start = 10.dp)) {
             Text(
                 text = "@$user",
-                style = MaterialTheme.typography.subtitle1
+                style = MaterialTheme.typography.subtitle1,
+                color = MaterialTheme.colors.onSurface
             )
             Row {
                 IconCount(

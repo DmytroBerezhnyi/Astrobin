@@ -3,7 +3,6 @@ package com.example.astrobin.ui.components.image
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -18,11 +17,11 @@ import com.example.astrobin.api.AstroUser
 import com.example.astrobin.ui.theme.Yellow
 
 @Composable
-fun AstroAvatar(imageUrl: String) {
+fun AstroAvatar(modifier: Modifier = Modifier, imageUrl: String) {
     Image(
         painter = rememberImagePainter(imageUrl),
         contentDescription = "",
-        modifier = Modifier
+        modifier = modifier
             .border(2.dp, Yellow, CircleShape)
             .padding(2.dp)
             .clip(CircleShape)
@@ -39,7 +38,5 @@ fun AstroAvatar(user: AstroUser) {
 @Preview
 @Composable
 private fun AstroAvatarPreview() {
-    AstroAvatar(
-        imageUrl = "https://developer.android.com/codelabs/jetpack-compose-animation/img/ea1442f28b3c3b39.png",
-    )
+    AstroAvatar(imageUrl = "")
 }
