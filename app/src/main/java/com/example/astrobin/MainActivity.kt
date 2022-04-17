@@ -14,16 +14,11 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var api: AstrobinApi
-
-    @Inject
     lateinit var imageLoader: ImageLoader
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.makeTransparentStatusBar()
         super.onCreate(savedInstanceState)
-        setContent {
-            Astrobin(api, imageLoader)
-        }
+        setContent { Astrobin(imageLoader) }
     }
 }

@@ -16,56 +16,52 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.File
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object OkHttpModule {
 
-  private val authQueryAppenderInterceptor: Interceptor = Interceptor { chain ->
-    val requestBuilder = chain.request().newBuilder()
+    private val authQueryAppenderInterceptor: Interceptor = Interceptor { chain ->
+        val requestBuilder = chain.request().newBuilder()
 
-    val url = chain.request().url
-    val urlBuilder = url.newBuilder()
-    if (url.queryParameter("api_key") == null) {
-      urlBuilder.addQueryParameter("api_key", BuildConfig.ASTROBIN_API_KEY)
+        val url = chain.request().url
+        val urlBuilder = url.newBuilder()
+        if (url.queryParameter("api_key") == null) {
+            urlBuilder.addQueryParameter("api_key", BuildConfig.ASTROBIN_API_KEY)
+        }
+        if (url.queryParameter("api_secret") == null) {
+            urlBuilder.addQueryParameter("api_secret", BuildConfig.ASTROBIN_API_SECRET)
+        }
+        chain.proceed(
+            requestBuilder.url(urlBuilder.build()).build()
+        )
     }
-    if (url.queryParameter("api_secret") == null) {
-      urlBuilder.addQueryParameter("api_secret", BuildConfig.ASTROBIN_API_SECRET)
-    }
-    chain.proceed(
-      requestBuilder
-        .url(urlBuilder.build())
-        .build()
-    )
-  }
 
-  @Provides
-  fun baseOkHttpClient(application: Application) = OkHttpClient
-    .Builder()
-    .addInterceptor(authQueryAppenderInterceptor)
-    .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
-    .cache(
-      Cache(
-        directory = File(application.cacheDir, "http_cache"),
-        maxSize = 50L * 1024L * 1024L // 50 MiB
-      )
-    )
-    .build()
+    @Singleton
+    @Provides
+    fun baseOkHttpClient(application: Application) =
+        OkHttpClient.Builder().addInterceptor(authQueryAppenderInterceptor)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }).cache(
+                Cache(
+                    directory = File(application.cacheDir, "http_cache"),
+                    maxSize = 50L * 1024L * 1024L // 50 MiB
+                )
+            ).build()
 
-  @Provides
-  fun retrofit(baseOkHttpClient: OkHttpClient) = Retrofit
-    .Builder()
-    .baseUrl("https://astrobin.com/api/v1/")
-    .client(baseOkHttpClient)
-    .addConverterFactory(
-      MoshiConverterFactory.create(
-        Moshi.Builder()
-          .addLast(KotlinJsonAdapterFactory())
-          .build()
-      )
-    )
-    .build()
+    @Singleton
+    @Provides
+    fun retrofit(baseOkHttpClient: OkHttpClient) =
+        Retrofit.Builder().baseUrl("https://astrobin.com/api/v1/").client(baseOkHttpClient)
+            .addConverterFactory(
+                MoshiConverterFactory.create(
+                    Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+                )
+            ).build()
 
-  @Provides
-  fun astrobinApi(retrofit: Retrofit) = retrofit.create(AstrobinApi::class.java)
+    @Singleton
+    @Provides
+    fun astrobinApi(retrofit: Retrofit): AstrobinApi = retrofit.create(AstrobinApi::class.java)
 }
