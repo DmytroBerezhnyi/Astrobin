@@ -3,9 +3,13 @@ package com.example.astrobin.ui.screens.main
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.astrobin.ui.screens.top.MainScreen
+import androidx.navigation.navArgument
+import com.example.astrobin.ui.screens.SearchAstroPostScreen
+import com.example.astrobin.ui.screens.post_detail.PostDetailScreen
+import com.example.astrobin.ui.screens.profile.ProfileScreen
 
 @Composable
 fun AstroNavHost(
@@ -18,7 +22,19 @@ fun AstroNavHost(
         startDestination = startDestination
     ) {
         composable(Routes.Top) {
-            MainScreen(paddingValues, navController)
+            MainScreen(padding = paddingValues, nav = navController)
+        }
+        composable(Routes.Search) {
+            SearchAstroPostScreen(paddingValues = paddingValues, navController = navController)
+        }
+        composable(Routes.Profile) {
+            ProfileScreen(paddingValues = paddingValues, navController = navController)
+        }
+        composable(
+            "image/{hash}",
+            listOf(navArgument("hash") { type = NavType.StringType })
+        ) {
+            PostDetailScreen(it.arguments!!.getString("hash")!!, paddingValues, navController)
         }
     }
 }

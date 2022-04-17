@@ -36,7 +36,7 @@ fun Astrobin(api: AstrobinApi, imageLoader: ImageLoader) {
                         BackArrow(navHostController)
                     }
                 },
-                bottom = { AstrobinBottomNavigationBar() }
+                bottom = { AstrobinBottomNavigationBar(navHostController = navHostController) }
             ) {
                 AstroNavHost(navController = navHostController, paddingValues = it)
             }

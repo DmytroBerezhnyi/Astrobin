@@ -24,7 +24,10 @@ fun AstroPostItem(astroImage: AstroImage? = null, image: TopPick, nav: NavContro
     Box(
         modifier = Modifier.padding(horizontal = 16.dp)
     ) {
-        AstroImage(imageUrl = image.url_regular, onClick = { nav.navigate("image/${image.hash}") })
+        AstroImage(
+            imageUrl = image.url_regular,
+            onClick = { nav.navigate("image/${image.hash}") }
+        )
         if (astroImage != null) {
             Text(
                 text = astroImage.title.orEmpty(),

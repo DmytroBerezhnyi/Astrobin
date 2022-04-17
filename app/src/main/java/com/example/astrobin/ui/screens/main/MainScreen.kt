@@ -1,5 +1,6 @@
-package com.example.astrobin.ui.screens.top
+package com.example.astrobin.ui.screens.main
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
@@ -9,6 +10,7 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.Pager
@@ -24,11 +26,18 @@ import com.google.accompanist.insets.statusBarsPadding
 
 @Composable
 fun MainScreen(padding: PaddingValues, nav: NavController) {
+    val vm: AstroPostsViewModel = viewModel()
     val api = LocalAstrobinApi.current
     val pager = remember { Pager(PagingConfig(pageSize = 20)) { TopPickPagingSource(api) } }
     val topPicks = pager.flow.collectAsLazyPagingItems()
     val loadState = topPicks.loadState
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = padding) {
+
+    Log.d("TAAAG", vm.hashCode().toString())
+
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = padding
+    ) {
         item { Spacer(Modifier.statusBarsPadding()) }
         item {
             Text(
@@ -37,17 +46,18 @@ fun MainScreen(padding: PaddingValues, nav: NavController) {
                 modifier = Modifier.padding(start = 16.dp, bottom = 16.dp)
             )
         }
-        items(topPicks) {
+        items(topPicks) { astroPost ->
 
             val astroImage = produceState<AstroImage?>(null) {
-                value = api.image(it!!.hash)
+                value = api.image(astroPost!!.hash)
             }.value
 
             AstroPostItem(
                 astroImage = astroImage,
-                image = it!!,
+                image = astroPost!!,
                 nav = nav
             )
+
             Spacer(Modifier.height(8.dp))
         }
         when {
@@ -58,20 +68,18 @@ fun MainScreen(padding: PaddingValues, nav: NavController) {
                 item { LoadingIndicator(Modifier.fillMaxWidth()) }
             }
             loadState.refresh is LoadState.Error -> {
-                val e = loadState.refresh as LoadState.Error
+                val error = loadState.refresh as LoadState.Error
                 item {
-                    // TODO: retry?
                     Text(
-                        text = e.error.localizedMessage!!,
+                        text = error.error.localizedMessage!!,
                         modifier = Modifier.fillParentMaxSize(),
                     )
                 }
             }
             loadState.append is LoadState.Error -> {
-                val e = loadState.append as LoadState.Error
+                val error = loadState.append as LoadState.Error
                 item {
-                    // TODO: retry?
-                    Text(e.error.localizedMessage!!)
+                    Text(error.error.localizedMessage!!)
                 }
             }
         }
