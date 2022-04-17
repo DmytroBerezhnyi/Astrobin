@@ -1,4 +1,4 @@
-package com.example.astrobin.components
+package com.example.astrobin.ui.components.bottom_bar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -21,7 +21,7 @@ import com.example.astrobin.ui.theme.DarkBlue
 import com.example.astrobin.ui.theme.Yellow
 
 @Composable
-fun AstrobinBottomNavigationBar(modifier: Modifier) {
+fun AstrobinBottomNavigationBar(modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         BottomNavigation(
             modifier = Modifier
@@ -34,7 +34,6 @@ fun AstrobinBottomNavigationBar(modifier: Modifier) {
 
         CenterNavItem()
     }
-
 }
 
 @Composable

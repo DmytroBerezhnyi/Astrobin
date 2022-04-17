@@ -5,6 +5,15 @@
       <map>
         <entry key="app/src/main/java/com/example/astrobin/components/BottomBar.kt" value="0.4601851851851852" />
         <entry key="app/src/main/java/com/example/astrobin/components/BottomBar2.kt" value="0.4601851851851852" />
+        <entry key="app/src/main/java/com/example/astrobin/screens/Astrobin.kt" value="0.33614864864864863" />
+        <entry key="app/src/main/java/com/example/astrobin/ui/components/bottom_bar/BottomBar.kt" value="0.3" />
+        <entry key="app/src/main/java/com/example/astrobin/ui/components/image/AstroAvatar.kt" value="0.3" />
+        <entry key="app/src/main/java/com/example/astrobin/ui/components/image/AstroImage.kt" value="0.3" />
+        <entry key="app/src/main/java/com/example/astrobin/ui/components/image/SmallUserRow.kt" value="0.42701525054466233" />
+        <entry key="app/src/main/java/com/example/astrobin/ui/components/image/TopPickRow.kt" value="0.2777777777777778" />
+        <entry key="app/src/main/java/com/example/astrobin/ui/components/image/UserImageRow.kt" value="0.3" />
+        <entry key="app/src/main/java/com/example/astrobin/ui/components/loading/LoadingIndicator.kt" value="0.2777307366638442" />
+        <entry key="app/src/main/java/com/example/astrobin/ui/screens/top/TopScreen.kt" value="0.625" />
       </map>
     </option>
   </component>
