@@ -2,6 +2,7 @@ package com.example.astrobin.ui.screens.main
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -22,16 +23,16 @@ fun Astrobin(imageLoader: ImageLoader) {
         val navBackStackEntry by navHostController.currentBackStackEntryAsState()
 
         AstrobinTheme(darkTheme = true) {
-            AstroAppWindow(
+            Scaffold(
                 modifier = Modifier
                     .fillMaxSize()
                     .navigationBarsPadding(),
-                top = {
+                topBar = {
                     if (navBackStackEntry != null && navHostController.previousBackStackEntry != null) {
                         BackArrow(navHostController)
                     }
                 },
-                bottom = { AstrobinBottomNavigationBar(navHostController = navHostController) }
+                bottomBar = { AstrobinBottomNavigationBar(navHostController = navHostController) }
             ) {
                 AstroNavHost(navController = navHostController, paddingValues = it)
             }
