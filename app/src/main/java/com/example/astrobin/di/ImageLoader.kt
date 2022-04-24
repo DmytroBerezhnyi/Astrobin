@@ -12,15 +12,13 @@ import okhttp3.OkHttpClient
 @Module
 @InstallIn(SingletonComponent::class)
 object ImageLoaderModule {
-  @Provides
-  fun imageLoader(
-    application: Application,
-    okHttpClient: OkHttpClient
-  ) = ImageLoader.Builder(application)
-    .okHttpClient(
-      okHttpClient.newBuilder()
-        .cache(CoilUtils.createDefaultCache(application))
-        .build()
-    )
-    .build()
+    @Provides
+    fun imageLoader(application: Application, okHttpClient: OkHttpClient): ImageLoader {
+        return ImageLoader.Builder(application)
+            .okHttpClient(
+                okHttpClient.newBuilder()
+                    .cache(CoilUtils.createDefaultCache(application))
+                    .build()
+            ).build()
+    }
 }

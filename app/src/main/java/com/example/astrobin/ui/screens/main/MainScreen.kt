@@ -1,6 +1,5 @@
 package com.example.astrobin.ui.screens.main
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
@@ -8,7 +7,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -18,9 +16,6 @@ import androidx.paging.compose.items
 import com.example.astrobin.api.AstroImage
 import com.example.astrobin.ui.components.image.AstroPostItem
 import com.example.astrobin.ui.components.loading.LoadingIndicator
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.google.accompanist.insets.statusBarsPadding
 
 @Composable
 fun MainScreen(padding: PaddingValues, nav: NavController) {
