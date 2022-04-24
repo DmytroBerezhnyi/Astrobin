@@ -1,5 +1,7 @@
 package com.example.astrobin.ui.theme
 
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val Purple200 = Color(0xFFBB86FC)
@@ -11,3 +13,9 @@ val Yellow = Color(0xFFF8BC04)
 val DarkBlue = Color(0xFF051427)
 val Maroon = Color(0xFF530F1E)
 val Orange = Color(0xFFA44322)
+
+val mainWindowGradient = Brush.linearGradient(
+    listOf(Color.Black, DarkBlue),
+    start = Offset.Zero,
+    end = Offset(0f, Float.POSITIVE_INFINITY)
+)
