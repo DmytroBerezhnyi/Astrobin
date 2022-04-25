@@ -18,8 +18,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.astrobin.extensions.isRouteSelected
+import com.example.astrobin.extensions.navigateTo
 import com.example.astrobin.ui.screens.main.Routes
 import com.example.astrobin.ui.theme.DarkBlue
 import com.example.astrobin.ui.theme.Yellow
@@ -27,10 +34,10 @@ import com.example.astrobin.ui.theme.Yellow
 @Composable
 fun AstrobinBottomNavigationBar(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController
+    navController: NavHostController
 ) {
-    var selectedRoute by remember { mutableStateOf(Routes.Top) }
-
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val navDestination = navBackStackEntry?.destination
     Box(modifier = modifier) {
         BottomNavigation(
             modifier = Modifier
@@ -38,41 +45,38 @@ fun AstrobinBottomNavigationBar(
                 .align(Alignment.BottomCenter), backgroundColor = Color.Black
         ) {
             AstrobinBottomNavigationItem2(
+                navController = navController,
+                navDestination = navDestination,
                 name = "TOP",
                 icon = Icons.Filled.Star,
-                isSelected = selectedRoute == Routes.Top
-            ) {
-                navHostController.navigate(Routes.Top)
-                selectedRoute = Routes.Top
-            }
+                route = Routes.Top,
+            )
             AstrobinBottomNavigationItem2(
+                navController = navController,
+                navDestination = navDestination,
                 name = "PROFILE",
                 icon = Icons.Filled.Person,
-                isSelected = selectedRoute == Routes.Profile
-            ) {
-                navHostController.navigate(Routes.Profile)
-                selectedRoute = Routes.Profile
-            }
+                route = Routes.Profile,
+            )
         }
 
-        CenterNavItem {
-            navHostController.navigate(Routes.Search)
-        }
+        CenterNavItem { navController.navigateTo(Routes.Search) }
     }
 }
 
 @Composable
 fun RowScope.AstrobinBottomNavigationItem2(
+    navController: NavController,
+    navDestination: NavDestination?,
     name: String,
     icon: ImageVector,
-    isSelected: Boolean,
-    onClick: () -> Unit,
+    route: String
 ) {
     BottomNavigationItem(
         icon = { Icon(icon, contentDescription = null) },
         label = { Text(name) },
-        selected = isSelected,
-        onClick = onClick,
+        selected = navDestination.isRouteSelected(route),
+        onClick = { navController.navigateTo(route) },
         selectedContentColor = Yellow,
         unselectedContentColor = Color.White,
     )
@@ -113,6 +117,6 @@ private fun BoxScope.CenterNavItem(onClick: () -> Unit) {
 fun BottomBarPrev() {
     AstrobinBottomNavigationBar(
         modifier = Modifier,
-        navHostController = rememberNavController()
+        navController = rememberNavController()
     )
 }

@@ -16,6 +16,7 @@
         <entry key="app/src/main/java/com/example/astrobin/ui/components/image/TopPickRow.kt" value="0.2777777777777778" />
         <entry key="app/src/main/java/com/example/astrobin/ui/components/image/UserImageRow.kt" value="0.3" />
         <entry key="app/src/main/java/com/example/astrobin/ui/components/loading/LoadingIndicator.kt" value="0.2777307366638442" />
+        <entry key="app/src/main/java/com/example/astrobin/ui/screens/profile/ProfileScreen.kt" value="0.3037037037037037" />
         <entry key="app/src/main/java/com/example/astrobin/ui/screens/top/TopScreen.kt" value="0.625" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1825" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1825" />

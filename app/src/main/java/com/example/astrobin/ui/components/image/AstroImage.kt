@@ -32,30 +32,33 @@ private val imageForegroundGradient = Brush.linearGradient(
 
 @Composable
 fun AstroImage(
-    imageUrl: String,
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    imageUrl: String,
+    onClick: () -> Unit = {},
+    placeholder: @Composable () -> Unit = { DefaultPlaceholder() },
 ) {
     LoadableImage(
         painter = rememberImagePainter(imageUrl),
         contentDescription = "",
         contentScale = ContentScale.FillWidth, // Bug here if I don't specify a size, I want fillWidth(). :(
-        placeholder = {
-            Box(Modifier.fillMaxSize()) {
-                LoadingIndicator(modifier = Modifier.align(Alignment.Center))
-            }
-        },
+        placeholder = placeholder,
         modifier = modifier
             .then(
                 Modifier
                     .fillMaxWidth()
-                    .aspectRatio(16f / 9f)
                     .clip(shape = RoundedCornerShape(8.dp))
                     .background(MaterialTheme.colors.primaryVariant)
                     .foreground(imageForegroundGradient)
             )
             .clickable(onClick = onClick)
     )
+}
+
+@Composable
+private fun DefaultPlaceholder() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        LoadingIndicator(modifier = Modifier.align(Alignment.Center))
+    }
 }
 
 @Preview

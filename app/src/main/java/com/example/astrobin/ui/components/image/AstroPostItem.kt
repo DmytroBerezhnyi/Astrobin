@@ -1,7 +1,7 @@
 package com.example.astrobin.ui.components.image
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -25,6 +25,7 @@ fun AstroPostItem(astroImage: AstroImage? = null, image: TopPick, nav: NavContro
         modifier = Modifier.padding(horizontal = 16.dp)
     ) {
         AstroImage(
+            modifier = Modifier.aspectRatio(16f / 9f),
             imageUrl = image.url_regular,
             onClick = { nav.navigate("image/${image.hash}") }
         )
